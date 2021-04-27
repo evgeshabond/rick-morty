@@ -3,11 +3,12 @@ import Link from 'next/link';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
 
-const CharacterOverview = ({ data, page }) => {
+const CharacterOverview = ({ data, page, error }) => {
+  if (error) return <p>This page does not exist</p>;
   const characters = data.characters.results;
-  console.log('got results: ', characters);
+  // console.log('got results: ', characters);
   return (
-    <>
+    <div>
       <Link href="/">
         <a>Home</a>
       </Link>
@@ -17,7 +18,7 @@ const CharacterOverview = ({ data, page }) => {
           {characters.map(x => (
             <li key={x.id}>
               <h2>Name: {x.name}</h2>
-              <img src={x.image} />
+              <img src={x.image} alt={x.name} />
               <Link href={`/character/${x.id}`}>
                 <a>Learn more</a>
               </Link>
@@ -25,31 +26,38 @@ const CharacterOverview = ({ data, page }) => {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 
-export async function getServerSideProps(props) {
-  const { page } = props.params;
-  const { data } = await client.query({
-    query: gql`
-      query {
-        characters(page: ${page}) {
-          info {
-            count
-            pages
-          }
-          results {
-            id
-            name
-            image
+export async function getServerSideProps({ res, params }) {
+  const { page } = params;
+  let response;
+  try {
+    response = await client.query({
+      query: gql`
+        query {
+          characters(page: ${page}) {
+            info {
+              count
+              pages
+            }
+            results {
+              id
+              name
+              image
+            }
           }
         }
-      }
-    `,
-  });
-  console.log(data);
-  return { props: { data, page } };
+      `,
+    });
+    console.log('good');
+    return { props: { data: response.data, error: null, page } };
+  } catch (e) {
+    console.log('catched error');
+    res.statusCode = 404;
+    return { props: { error: 'could not find' } };
+  }
 }
 
 export default CharacterOverview;
