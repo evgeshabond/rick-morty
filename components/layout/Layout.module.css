@@ -1,0 +1,9 @@
+.container {
+  /* background-color: antiquewhite; */
+  max-width: 75rem;
+  width: 100%;
+  margin: auto;
+  display: 'flex';
+  flex-direction: 'column';
+}
+

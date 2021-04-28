@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
 import styles from './Page.module.css';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout/Layout';
+import Pagination from '../../components/pagination/Pagination';
 
 const CharacterOverview = ({ data, page, error }) => {
   if (error) return <p>This page does not exist</p>;
@@ -27,6 +28,13 @@ const CharacterOverview = ({ data, page, error }) => {
           </li>
         ))}
       </ul>
+      <Pagination
+        prev={info.prev}
+        next={info.next}
+        page={page}
+        baseUrl="/character-overview/"
+        pageCount={info.pages}
+      />
     </Layout>
   );
 };
@@ -62,19 +70,3 @@ export async function getServerSideProps({ res, params }) {
 }
 
 export default CharacterOverview;
-//  sddfsadd
-// function Page({ data }) {
-//   // Render data...
-// }
-
-// // This gets called on every request
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const res = await fetch(`https://.../data`)
-//   const data = await res.json()
-
-//   // Pass data to the page via props
-//   return { props: { data } }
-// }
-
-// export default Page
