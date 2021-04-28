@@ -1,30 +1,44 @@
-import React from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { gql } from '@apollo/client';
+import Character from '../../components/character/Character';
+import { getAll } from '../../service/user';
 import client from '../../apollo-client';
 import styles from './Page.module.css';
 import Layout from '../../components/layout/Layout';
 import Pagination from '../../components/pagination/Pagination';
 
 const CharacterOverview = ({ data, page, error }) => {
+  const user = 'evgen';
+  const { results, info } = data?.characters;
+  const [favoritesList, setFavotiresList] = useState([]);
+
+  useEffect(() => {
+    console.log('useEffect run');
+    getAll(user)
+      .then(responseData => {
+        setFavotiresList(responseData);
+        console.log('useEffect -> getAll: ', responseData);
+      })
+      .catch(e => console.log(e));
+  }, []);
+
   if (error) return <p>This page does not exist</p>;
-  const { results, info } = data.characters;
-  // console.log(results, info);
-  // console.log('got results: ', characters);
+
   return (
     <Layout>
       <ul className={styles.charactersList}>
         {results.map(x => (
           <li key={x.id} className={styles.charactersList__item}>
-            <h2>{x.name}</h2>
-            <img
-              src={x.image}
-              alt={x.name}
-              className={styles.charactersList__image}
+            <Character
+              name={x.name}
+              id={x.id}
+              image={x.image}
+              isLiked={favoritesList.includes(x.id)}
+              setFavotiresList={payload => {
+                console.log('payload is: ', payload);
+                setFavotiresList(payload);
+              }}
             />
-            <Link href={`/character/${x.id}`}>
-              <a>Learn more</a>
-            </Link>
           </li>
         ))}
       </ul>
@@ -41,9 +55,8 @@ const CharacterOverview = ({ data, page, error }) => {
 
 export async function getServerSideProps({ res, params }) {
   const { page } = params;
-  let response;
   try {
-    response = await client.query({
+    const response = await client.query({
       query: gql`
         query {
           characters(page: ${page}) {

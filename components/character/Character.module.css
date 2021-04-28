@@ -1,0 +1,26 @@
+.character {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.character__imageContainer {
+  position: relative;
+}
+
+.character__likeButton {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+}
+
+.character__likeButton:hover {
+  transform: scale(1.1);
+}
+
+.character__image {
+  width: 100%;
+}
