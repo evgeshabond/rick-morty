@@ -2,31 +2,32 @@ import React from 'react';
 import Link from 'next/link';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
+import styles from './Page.module.css';
+import Layout from '../../components/Layout';
 
 const CharacterOverview = ({ data, page, error }) => {
   if (error) return <p>This page does not exist</p>;
-  const characters = data.characters.results;
+  const { results, info } = data.characters;
+  // console.log(results, info);
   // console.log('got results: ', characters);
   return (
-    <div>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-      <p>Page number is {page}</p>
-      <div>
-        <ul>
-          {characters.map(x => (
-            <li key={x.id}>
-              <h2>Name: {x.name}</h2>
-              <img src={x.image} alt={x.name} />
-              <Link href={`/character/${x.id}`}>
-                <a>Learn more</a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <Layout>
+      <ul className={styles.charactersList}>
+        {results.map(x => (
+          <li key={x.id} className={styles.charactersList__item}>
+            <h2>{x.name}</h2>
+            <img
+              src={x.image}
+              alt={x.name}
+              className={styles.charactersList__image}
+            />
+            <Link href={`/character/${x.id}`}>
+              <a>Learn more</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </Layout>
   );
 };
 
@@ -41,6 +42,8 @@ export async function getServerSideProps({ res, params }) {
             info {
               count
               pages
+              next
+              prev
             }
             results {
               id
@@ -51,17 +54,15 @@ export async function getServerSideProps({ res, params }) {
         }
       `,
     });
-    console.log('good');
     return { props: { data: response.data, error: null, page } };
   } catch (e) {
-    console.log('catched error');
     res.statusCode = 404;
     return { props: { error: 'could not find' } };
   }
 }
 
 export default CharacterOverview;
-
+//  sddfsadd
 // function Page({ data }) {
 //   // Render data...
 // }
