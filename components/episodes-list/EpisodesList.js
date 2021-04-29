@@ -7,7 +7,7 @@ const EpisodesList = ({ episodes }) => {
     <ul className={styles.episodesList}>
       {episodes.map(x => (
         <li key={x.id} className={styles.episodesList__item}>
-          <Episode id={x.id} name={x.name} episode={x.episode} />
+          <Episode {...x} />
         </li>
       ))}
     </ul>

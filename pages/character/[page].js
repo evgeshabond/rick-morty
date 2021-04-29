@@ -2,19 +2,19 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
 import Layout from '../../components/layout/Layout';
-import Episode from '../../components/episode/Episode';
+// import Pagination from '../../components/pagination/Pagination';
 import CharactersList from '../../components/characters-list/CharactersList';
+import EpisodesList from '../../components/episodes-list/EpisodesList';
 
-const EpisodeOverview = ({ data, error }) => {
-  const { episode } = data;
-  console.log(episode.characters);
+const CharacterOverview = ({ data, error }) => {
+  const { character } = data;
+  console.log(character);
 
   if (error) return <p>This page does not exist</p>;
-
   return (
     <Layout>
-      <Episode {...episode} />
-      <CharactersList characters={episode.characters} />
+      <CharactersList characters={[character]} />
+      <EpisodesList episodes={character.episode} />
     </Layout>
   );
 };
@@ -25,15 +25,16 @@ export async function getServerSideProps({ res, params }) {
     const response = await client.query({
       query: gql`
         query {
-          episode(id: ${page}) {
+          character(id: ${page}) {
             id
             name
-            air_date
-            episode
-            characters {
+            image
+            gender
+            species
+            episode {
               id
               name
-              image
+              episode
             }
           }
         }
@@ -45,12 +46,14 @@ export async function getServerSideProps({ res, params }) {
     return {
       props: {
         data: {
-          episode: {},
+          characters: {
+            results: [],
+          },
+          error: 'could not find',
         },
-        error: 'could not find',
       },
     };
   }
 }
 
-export default EpisodeOverview;
+export default CharacterOverview;

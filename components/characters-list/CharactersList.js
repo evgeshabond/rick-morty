@@ -21,9 +21,7 @@ const CharactersList = ({ characters }) => {
       {characters.map(x => (
         <li key={x.id} className={styles.charactersList__item}>
           <Character
-            name={x.name}
-            id={x.id}
-            image={x.image}
+            {...x}
             isLiked={favoritesList.includes(x.id)}
             setFavotiresList={payload => {
               setFavotiresList(payload);

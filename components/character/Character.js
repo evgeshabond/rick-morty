@@ -4,7 +4,15 @@ import Link from 'next/link';
 import { toggleItem } from '../../service/user';
 import styles from './Character.module.css';
 
-const Character = ({ id, name, image, isLiked, setFavotiresList }) => {
+const Character = ({
+  id,
+  name,
+  image,
+  gender,
+  species,
+  isLiked,
+  setFavotiresList,
+}) => {
   const handleLikeClick = async (itemId, user) => {
     try {
       const updates = await toggleItem(itemId, user);
@@ -35,9 +43,14 @@ const Character = ({ id, name, image, isLiked, setFavotiresList }) => {
         </div>
         <img src={image} alt={name} className={styles.character__image} />
       </div>
-      <Link href={`/character/${id}`}>
-        <a>Learn more</a>
-      </Link>
+      {gender && <p>{gender}</p>}
+      {species && <p>{species}</p>}
+      {/* if there is gender means that we are in detailed page */}
+      {!gender && (
+        <Link href={`/character/${id}`}>
+          <a>Learn more</a>
+        </Link>
+      )}
     </div>
   );
 };
