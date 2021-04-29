@@ -13,7 +13,9 @@ const CharactersList = ({ characters }) => {
       .then(responseData => {
         setFavotiresList(responseData);
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        console.log(e);
+      });
   }, []);
 
   return (

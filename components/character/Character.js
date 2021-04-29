@@ -18,7 +18,7 @@ const Character = ({
       const updates = await toggleItem(itemId, user);
       setFavotiresList(updates);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import styles from './Pagination.module.css';
 
 const Pagination = ({ prev, next, page, baseUrl, pageCount }) => {
-  // console.log(prev, next, page, baseUrl);
   return (
     <nav className={styles.pagination}>
       {prev && (

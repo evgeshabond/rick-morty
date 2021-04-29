@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import CharactersList from '../characters-list/CharactersList';
 import styles from './Episode.module.css';
 
 const Episode = ({ id, name, episode, air_date }) => {

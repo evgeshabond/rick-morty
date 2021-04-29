@@ -7,7 +7,6 @@ import CharactersList from '../../components/characters-list/CharactersList';
 
 const EpisodeOverview = ({ data, error }) => {
   const { episode } = data;
-  console.log(episode.characters);
 
   if (error) return <p>This page does not exist</p>;
 

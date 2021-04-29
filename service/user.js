@@ -15,18 +15,15 @@ export const toggleItem = async (itemId, user) => {
     const favoritesList = await getAll(user);
     if (!favoritesList) {
       await localforage.setItem(user, [itemId]);
-      console.log('returned: ', [itemId]);
       return [itemId];
     }
     if (favoritesList.includes(itemId)) {
       const newList = favoritesList.filter(item => item !== itemId);
       await localforage.setItem(user, newList);
-      console.log('returned: ', newList);
       return newList;
     }
     const newList = [...favoritesList, itemId];
     await localforage.setItem(user, newList);
-    console.log('returned: ', newList);
     return newList;
   } catch (e) {
     return e;
