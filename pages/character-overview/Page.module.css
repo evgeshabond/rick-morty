@@ -4,8 +4,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-end;
   list-style: none;  
-  align-items: center;
   margin: 0;
   padding: 0;
 }
