@@ -8,7 +8,12 @@ import EpisodesList from '../../components/episodes-list/EpisodesList';
 const EpisodeOverview = ({ data, page, error }) => {
   const { results, info } = data.episodes;
 
-  if (error) return <p>This page does not exist</p>;
+  if (error)
+    return (
+      <Layout>
+        <h1>Error 404. This page does not exist</h1>
+      </Layout>
+    );
 
   return (
     <Layout>

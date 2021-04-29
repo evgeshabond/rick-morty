@@ -9,7 +9,13 @@ import EpisodesList from '../../components/episodes-list/EpisodesList';
 const CharacterOverview = ({ data, error }) => {
   const { character } = data;
 
-  if (error) return <p>This page does not exist</p>;
+  if (error)
+    return (
+      <Layout>
+        <h1>Error 404. This page does not exist</h1>
+      </Layout>
+    );
+
   return (
     <Layout>
       <CharactersList characters={[character]} />
@@ -48,8 +54,8 @@ export async function getServerSideProps({ res, params }) {
           characters: {
             results: [],
           },
-          error: 'could not find',
         },
+        error: 'could not find',
       },
     };
   }

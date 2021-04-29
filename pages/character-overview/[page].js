@@ -8,7 +8,12 @@ import CharactersList from '../../components/characters-list/CharactersList';
 const CharacterOverview = ({ data, page, error }) => {
   const { results, info } = data.characters;
 
-  if (error) return <p>This page does not exist</p>;
+  if (error)
+    return (
+      <Layout>
+        <h1>Error 404. This page does not exist</h1>
+      </Layout>
+    );
   return (
     <Layout>
       <CharactersList characters={results} />
@@ -55,8 +60,8 @@ export async function getServerSideProps({ res, params }) {
             info: [],
             results: [],
           },
-          error: 'could not find',
         },
+        error: 'could not find',
       },
     };
   }
