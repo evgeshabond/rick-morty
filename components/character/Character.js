@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import localforage from 'localforage';
 import { toggleItem } from '../../service/user';
 import styles from './Character.module.css';
 
