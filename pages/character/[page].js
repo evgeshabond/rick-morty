@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/client';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
 import Layout from '../../components/layout/Layout';
@@ -6,8 +7,13 @@ import Layout from '../../components/layout/Layout';
 import CharactersList from '../../components/characters-list/CharactersList';
 import EpisodesList from '../../components/episodes-list/EpisodesList';
 
-const CharacterOverview = ({ data, error }) => {
+const Character = ({ data, error }) => {
   const { character } = data;
+  const [session, loading] = useSession();
+
+  useEffect(() => {
+    console.log('useeffect');
+  });
 
   if (error)
     return (
@@ -25,6 +31,7 @@ const CharacterOverview = ({ data, error }) => {
 };
 
 export async function getServerSideProps({ res, params }) {
+  // console.log(process.env._TEST_VARIABLE);
   const { page } = params;
   try {
     const response = await client.query({
@@ -61,4 +68,4 @@ export async function getServerSideProps({ res, params }) {
   }
 }
 
-export default CharacterOverview;
+export default Character;

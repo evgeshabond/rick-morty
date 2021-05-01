@@ -1,7 +1,15 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 1rem 1rem;
+}
+
 .navigation {
   display: flex;
   justify-content: center;
   padding: 0.5rem 1rem;
+  flex-wrap: wrap;
 }
 
 .navigation__item {
@@ -18,3 +26,4 @@
 .navigation__item__active {
   text-decoration: underline;
 }
+

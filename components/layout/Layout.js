@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import Navigation from './Navigation';
+import Header from './Header';
 import { pathToTitle } from '../../utils/pathToTitle';
 
 import styles from './Layout.module.css';
@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <Navigation />
+      <Header />
       <main className={styles.main}>{children}</main>
     </div>
   );
