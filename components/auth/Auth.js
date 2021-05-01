@@ -2,8 +2,7 @@ import { useSession, signIn, signOut } from 'next-auth/client';
 import styles from './Auth.module.css';
 
 export default function Auth() {
-  const [session, loading] = useSession();
-  console.log(session, loading);
+  const [session] = useSession();
 
   if (session) {
     return (

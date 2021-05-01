@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/client';
 import { toggleItem } from '../../service/user';
 import styles from './Character.module.css';
 
@@ -13,6 +14,15 @@ const Character = ({
   isLiked,
   setFavotiresList,
 }) => {
+  const [session] = useSession();
+  const [userEmail, setUserEmail] = React.useState('localUser');
+
+  useEffect(() => {
+    if (session) {
+      setUserEmail(session.user.email);
+    }
+  }, [session]);
+
   const handleLikeClick = async (itemId, user) => {
     try {
       const updates = await toggleItem(itemId, user);
@@ -28,7 +38,7 @@ const Character = ({
       <div className={styles.character__imageContainer}>
         <div
           className={styles.character__likeButton}
-          onClick={() => handleLikeClick(id, 'evgen')}
+          onClick={() => handleLikeClick(id, userEmail)}
           aria-hidden="true"
         >
           {isLiked ? (
