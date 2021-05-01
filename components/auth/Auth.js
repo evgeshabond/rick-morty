@@ -20,8 +20,10 @@ export default function Auth() {
     );
   }
   return (
-    <button type="button" onClick={signIn}>
-      Sign in
-    </button>
+    <div className={styles.auth}>
+      <button type="button" onClick={signIn}>
+        Sign in
+      </button>
+    </div>
   );
 }
