@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import LearnMoreButton from '../learnMoreButton/LearnMoreButton';
 import styles from './Episode.module.css';
 
 const Episode = ({ id, name, episode, air_date }) => {
@@ -9,11 +9,7 @@ const Episode = ({ id, name, episode, air_date }) => {
       <p>{episode}</p>
       {air_date && <p>{air_date}</p>}
       {/* if there is air_date means that we are in episode detailed page */}
-      {!air_date && (
-        <Link href={`/episode/${id}`}>
-          <a>Learn more</a>
-        </Link>
-      )}
+      {!air_date && <LearnMoreButton url={`/episode/${id}`} />}
     </div>
   );
 };

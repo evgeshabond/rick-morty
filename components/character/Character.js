@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useSession } from 'next-auth/client';
+import LearnMoreButton from '../learnMoreButton/LearnMoreButton';
 import { toggleItem } from '../../service/user';
 import styles from './Character.module.css';
 
@@ -56,11 +56,7 @@ const Character = ({
       {gender && <p>{gender}</p>}
       {species && <p>{species}</p>}
       {/* if there is gender means that we are in detailed page */}
-      {!gender && (
-        <Link href={`/character/${id}`}>
-          <a>Learn more</a>
-        </Link>
-      )}
+      {!gender && <LearnMoreButton url={`/character/${id}`} />}
     </div>
   );
 };
